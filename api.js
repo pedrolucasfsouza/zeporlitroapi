@@ -6,7 +6,7 @@ const cheerio = require('cheerio')
 const { resolve } = require('path')
 
 const mongodb=require('mongodb').MongoClient
-const url = "mongodb://147.182.222.142:27017/"
+const url = "mongodb://159.223.169.216:27017/"
 
 
 

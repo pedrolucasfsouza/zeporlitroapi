@@ -5,7 +5,7 @@ const cors = require('cors');
 const bodyParser = require('body-parser');
 
 const mongodb=require('mongodb').MongoClient
-const url = "mongodb://147.182.222.142:27017/"
+const url = "mongodb://159.223.169.216:27017/"
 
 app.use(cors());
 app.use(bodyParser.json());
