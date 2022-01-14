@@ -269,7 +269,7 @@ const haveCollection = () => {
             }
             const dbo = banco.db("zeporlitro")
             dbo.collection('zeporlitro').count({}, { limit: 1 }).then(value => resolve(value))
-            
+            banco.close
             })
     }
     return new Promise(promiseCallBack)
@@ -284,7 +284,7 @@ const deleteDB = () => {
             }
             const dbo = banco.db("zeporlitro")
             dbo.collection('zeporlitro').drop().then(value => resolve(value), console.log('deletou'))
-            
+            banco.close
             })
     }
     return new Promise(promiseCallBack)
@@ -294,4 +294,4 @@ const deleteDB = () => {
 
 setInterval(()=>{
     getNewData();
-},60000)
+},300000)
