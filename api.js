@@ -149,8 +149,6 @@ productsCalc = []
 const calcItems = (products) => { // funcao que ira realizar os calculos.
     const promiseCallBack = (resolve, reject) => {
 
-
-        
         products.map((product) => {
             const price = Number(parseFloat(product.price.replace(',','.').replace(' ','').replace('R$', '')))
 
@@ -221,36 +219,34 @@ const marcas = ['brahma', 'skol', 'antarctica', 'budweiser', 'original', 'stella
 async function getNewData(){
     await getCachedPage('skol').then(getPageItems).then(calcItems).then()
     await getCachedPage('brahma').then(getPageItems).then(calcItems).then()
-    await getCachedPage('antarctica').then(getPageItems).then(calcItems).then()
-    await getCachedPage('budweiser').then(getPageItems).then(calcItems).then()
-    await getCachedPage('original').then(getPageItems).then(calcItems).then()
-    await getCachedPage('stella-artois').then(getPageItems).then(calcItems).then()
-    await getCachedPage('bohemia').then(getPageItems).then(calcItems).then()
-    await getCachedPage('corona').then(getPageItems).then(calcItems).then()
-    await getCachedPage('becks').then(getPageItems).then(calcItems).then()
-    await getCachedPage('colorado').then(getPageItems).then(calcItems).then()
-    
-    const haveInBD = await haveCollection().then(value => value)
 
-    if(haveInBD===1){
-    await deleteDB().then()
+
+    
+    const haveInBD = await haveCollection().then()
+        console.log('tem no bd?', haveInBD)
+    if(1 === 1){
+    await deleteDB().then(value => console.log(value))
+    await mapProducts(productsCalc)
+}
+else {
+    mapProducts(productsCalc)
 }
 
-    mapProducts(productsCalc)
+productsCalc = []
 
 }
 
 async function mapProducts(products) {
-    console.log('mapeando itens')
-    products.map(product => saveObjToDB(product), console.log('salvando'))
+    products.map(product => saveObjToDB(product))
+
 }
 
 async function saveObjToDB(obj){
-
     mongodb.connect(url, (erro, banco) => {
         if(erro){
             throw erro;
         }
+        
         const dbo = banco.db("zeporlitro")
         dbo.collection('zeporlitro').insertOne(obj, ()=> (erro, resultado) => {
             if (erro) throw erro
@@ -269,7 +265,7 @@ const haveCollection = () => {
             }
             const dbo = banco.db("zeporlitro")
             dbo.collection('zeporlitro').count({}, { limit: 1 }).then(value => resolve(value))
-            banco.close
+
             })
     }
     return new Promise(promiseCallBack)
@@ -283,8 +279,11 @@ const deleteDB = () => {
                 throw erro;
             }
             const dbo = banco.db("zeporlitro")
-            dbo.collection('zeporlitro').drop().then(value => resolve(value), console.log('deletou'))
-            banco.close
+            dbo.collection("zeporlitro").deleteMany({}).then(value => resolve('foi deletado buceta',value)).catch(err => {
+                console.log('deu merda p deletar', err)
+
+            })
+
             })
     }
     return new Promise(promiseCallBack)
@@ -294,4 +293,4 @@ const deleteDB = () => {
 
 setInterval(()=>{
     getNewData();
-},300000)
+},600000)
