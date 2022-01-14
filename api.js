@@ -293,6 +293,5 @@ const deleteDB = () => {
 
 
 setInterval(()=>{
-    '*****ATUALIZANDO DADOS DA API APÓS AGUARDAR 1H*****'
     getNewData();
-},3600000)
+},60000)
