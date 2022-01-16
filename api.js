@@ -4,6 +4,7 @@ const fs = require ('fs')
 const fsPromises = fs.promises;
 const cheerio = require('cheerio')
 const { resolve } = require('path')
+const db = require("./db")
 
 const mongodb=require('mongodb').MongoClient
 const url = "mongodb://159.223.169.216:27017/"
@@ -219,6 +220,14 @@ const marcas = ['brahma', 'skol', 'antarctica', 'budweiser', 'original', 'stella
 async function getNewData(){
     await getCachedPage('skol').then(getPageItems).then(calcItems).then()
     await getCachedPage('brahma').then(getPageItems).then(calcItems).then()
+    await getCachedPage('antarctica').then(getPageItems).then(calcItems).then()
+    await getCachedPage('budweiser').then(getPageItems).then(calcItems).then()
+    await getCachedPage('original').then(getPageItems).then(calcItems).then()
+    await getCachedPage('stella-artois').then(getPageItems).then(calcItems).then()
+    await getCachedPage('bohemia').then(getPageItems).then(calcItems).then()
+    await getCachedPage('corona').then(getPageItems).then(calcItems).then()
+    await getCachedPage('becks').then(getPageItems).then(calcItems).then()
+    await getCachedPage('colorado').then(getPageItems).then(calcItems).then()
 
 
     
@@ -242,16 +251,8 @@ async function mapProducts(products) {
 }
 
 async function saveObjToDB(obj){
-    mongodb.connect(url, (erro, banco) => {
-        if(erro){
-            throw erro;
-        }
-        
-        const dbo = banco.db("zeporlitro")
         dbo.collection('zeporlitro').insertOne(obj, ()=> (erro, resultado) => {
             if (erro) throw erro
-            banco.close
-            })
         })
 }
 
@@ -290,7 +291,5 @@ const deleteDB = () => {
 }
 
 
-
-setInterval(()=>{
     getNewData();
-},600000)
+

@@ -1,27 +1,16 @@
 const routes = require('express').Router();
 const mongodb=require('mongodb').MongoClient
-const url = "mongodb://159.223.169.216:27017/"
+const db = require("./db")
+const url = "mongodb://159.223.169.216:27017/?directConnection=true"
 
 
 routes.get('/', async (req, res) => {
-    
-    mongodb.connect(url, (erro, banco) => {
-        if(erro){
-            throw erro;
-        }
-        const dbo = banco.db("zeporlitro")
-        
         dbo.collection('zeporlitro').find({}).toArray((erro, resultado) => {
             if (erro) throw erro
-            banco.close
             res.send(resultado);
             })
         
         })
-    
-    
-  
-});
 
 
 module.exports = routes;

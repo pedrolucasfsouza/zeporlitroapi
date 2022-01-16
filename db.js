@@ -1,7 +1,9 @@
 const mongoClient = require('mongodb').MongoClient;
-mongoClient.connect("mongodb://localhost:27017", {useUnifiedTopology: true},
-                                    (error, connection) => {
-                                        if(error) return console.log(error)
-                                        global.connection = connection.db('zeporlitro')
+mongoClient.connect("mongodb://159.223.169.216:27017/?directConnection=true", {useUnifiedTopology: true},
+                                    (erro, banco) => {
+                                        if(erro) return console.log(error)
+                                        dbo = banco.db('zeporlitro')
+                                        console.log('banco de dados conectado!')
                                     });
 
+module.exports = {}
