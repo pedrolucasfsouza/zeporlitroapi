@@ -280,7 +280,7 @@ const deleteDB = () => {
                 throw erro;
             }
             const dbo = banco.db("zeporlitro")
-            dbo.collection("zeporlitro").deleteMany({}).then(value => resolve('foi deletado buceta',value)).catch(err => {
+            dbo.collection("zeporlitro").deleteMany({}).then(value => resolve('foi deletado',value)).catch(err => {
                 console.log('deu merda p deletar', err)
 
             })
