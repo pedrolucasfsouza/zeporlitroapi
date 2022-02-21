@@ -281,7 +281,7 @@ const deleteDB = () => {
             }
             const dbo = banco.db("zeporlitro")
             dbo.collection("zeporlitro").deleteMany({}).then(value => resolve('foi deletado',value)).catch(err => {
-                console.log('deu merda p deletar', err)
+                console.log('problema ao apagar', err)
 
             })
 
